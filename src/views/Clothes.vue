@@ -1,8 +1,8 @@
 <template>
     <div>
-        <Product name="T shirt"/>
-        <Product name="Jeans"/>
-        <Product name="Shoes"/>
+        <Product name="T shirt" img="tshirt"/>
+        <Product name="Jeans" img="jeans"/>
+        <Product name="Shoes" img="shoes"/>
     </div>
 </template>
 

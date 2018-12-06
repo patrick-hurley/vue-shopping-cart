@@ -1,6 +1,7 @@
 <template>
   <div class="product">
-    <h3>Product: {{ name }}</h3>
+    <img :src="require(`../assets/img/${img}.png`)" alt=""/>
+    <h3>{{ name }}</h3>
     <button @click="addToBasket(name)">Add to Cart</button>
   </div>
 </template>
@@ -12,7 +13,8 @@ export default {
     return { }
   },
   props: {
-    name: String
+    name: String,
+    img: String
   },
   methods: {
     addToBasket: function(name){
@@ -26,15 +28,18 @@ export default {
 <style scoped lang="scss">
 
 .product {
+  overflow: auto;
   padding: 40px;
   background: #f5f5f5;
   border-radius: 10px;
   margin: 20px 0;
-  h3 {
-    display: inline-block;
-    width: 200px;
+  img {
+    width: 250px;
+    float: left;
+    margin-right: 40px;
   }
   button {
+    margin-top: 20px;
     background-color: rgb(212, 212, 212);
     padding: 10px;
     border-radius: 5px;
@@ -42,6 +47,5 @@ export default {
   }
 
 }
-
 
 </style>

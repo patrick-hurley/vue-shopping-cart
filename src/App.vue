@@ -5,23 +5,43 @@
       <div class="logo">
         <span>Hunky Dory</span>
       </div>
-      <div class="shopping-cart">
-        <p>Basket: ({{ cartItemCount }})</p>
+      <div class="shopping-status">
+        <a @click="showBasket">Basket: ({{ cartItemCount }})</a>
       </div>
     </nav>
 
-    <div>
+    <transition name="fade">
+      <div class="shopping-cart" v-show="basketIsShown">
+        <div v-if="cartItems.length != 0">
+          <ul>
+            <li v-for="(item, index) in cartItems" :key="index">{{ item }}</li>
+          </ul>
+        </div>
+        <div v-else>
+          <p>Your basket is empty</p>
+        </div>
+      </div>
+    </transition>
+    
+    <main>
       <Clothes/>
-    </div>
+    </main>
+  
 
   </div>
 </template>
 
 <script>
 
-// Shopping cart array needs to be added in App.vue as the data is used across the app. 
-// The 'add to cart' button will be on the Product.vue component, and will need to emit up to App.vue
-// vm.$root.$emit will send the emit to the root component
+/* TO DO
+// ==============================================
+// 1. Add images to products
+// 2. Group the same products together in the basket
+// 
+//
+//
+//
+*/
 
 import Clothes from './views/Clothes.vue'
 
@@ -29,7 +49,8 @@ export default {
   name: 'app',
   data(){
     return {
-      cartItems: []
+      cartItems: [],
+      basketIsShown: false
     }
   },
   components: {
@@ -37,7 +58,10 @@ export default {
   },
   methods: {
     addToCart: function(name){
-      this.cartItems.push(name)
+      this.cartItems.push(name);
+    },
+    showBasket: function(){
+      this.basketIsShown = !this.basketIsShown;
     }
   },
   computed: {
@@ -65,8 +89,14 @@ export default {
 @import url('https://use.fontawesome.com/releases/v5.5.0/css/all.css');
 @import url('https://fonts.googleapis.com/css?family=Bungee|Open+Sans');
 
+
 html {
   font-family: 'Open Sans', sans-serif;
+}
+
+ul, li, p, h3 {
+  margin: 0;
+  padding: 0;
 }
 
 .container {
@@ -75,7 +105,7 @@ html {
 }
 
 .inner {
-  padding: 20px 40px;
+  padding: 20px 30px;
 }
 
 nav {
@@ -91,18 +121,38 @@ nav {
   float: left;
 }
 
-.shopping-cart {
+.shopping-status {
   float: right;
   margin-top: 17px;
-  p {
+  a {
     margin: 0;
+    cursor: pointer;
   }
-  p:before{
+  a:before{
     font-family: 'Font Awesome 5 Free';
     content: '\f07a';
     padding-right: 10px;
     font-weight: 700;
   }
+}
+
+.shopping-cart {
+  background: #c0bfbf;
+  border-radius: 10px;
+  margin-top: 20px;
+  color: white;
+  padding: 20px 30px;
+  font-weight: 900;
+  ul {
+    list-style: none;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
 </style>
