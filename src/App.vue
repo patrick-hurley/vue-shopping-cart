@@ -14,8 +14,11 @@
       <div class="shopping-cart" v-show="basketIsShown">
         <div v-if="cartItems.length != 0">
           <ul>
-            <li v-for="(item, index) in cartItems" :key="index">{{ item }}</li>
+            <li v-for="(item, index) in cartItems" :key="index">
+              {{ item.name }} - £{{ (item.price).toFixed(2) }}
+              </li>
           </ul>
+          <p class="shopping-cart_total">Total: £{{ cartTotal }}</p>
         </div>
         <div v-else>
           <p>Your basket is empty</p>
@@ -36,7 +39,8 @@
 /* TO DO
 // ==============================================
 // 1. Add images to products
-// 2. Group the same products together in the basket
+// 2. Show total basket amount (pass the price)
+// 3. Group the same products together in the basket
 // 
 //
 //
@@ -72,7 +76,9 @@ export default {
       else {
         return this.cartItems.length
       }
-      
+    },
+    cartTotal: function(){
+      return (this.cartItems.map(item => item.price).reduce((a,b) => a+b)).toFixed(2);
     }
   },
   created: function () {
@@ -94,7 +100,7 @@ html {
   font-family: 'Open Sans', sans-serif;
 }
 
-ul, li, p, h3 {
+ul, li, p, h1, h2, h3 {
   margin: 0;
   padding: 0;
 }
@@ -145,6 +151,15 @@ nav {
   font-weight: 900;
   ul {
     list-style: none;
+  }
+  li {
+    font-size: 20px;
+  }
+  &_total {
+    border-top: 2px solid #eeeeee;
+    margin-top: 20px;
+    padding-top: 10px;
+    font-size: 25px;
   }
 }
 

@@ -2,6 +2,7 @@
   <div class="product">
     <img :src="require(`../assets/img/${img}.png`)" alt=""/>
     <h3>{{ name }}</h3>
+    <p>{{ formatPrice }}</p>
     <button @click="addToBasket(name)">Add to Cart</button>
   </div>
 </template>
@@ -14,11 +15,17 @@ export default {
   },
   props: {
     name: String,
-    img: String
+    img: String,
+    price: Number
   },
   methods: {
     addToBasket: function(name){
-      this.$root.$emit('addIt',name);
+      this.$root.$emit('addIt',{'name': this.name, 'price': this.price});
+    }
+  },
+  computed: {
+    formatPrice(){
+      return '£' + (this.price).toFixed(2);
     }
   }
 }
@@ -26,6 +33,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
+$color-button: #d4d4d4;
 
 .product {
   overflow: auto;
@@ -40,10 +49,17 @@ export default {
   }
   button {
     margin-top: 20px;
-    background-color: rgb(212, 212, 212);
+    background-color: $color-button;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: 900;
+    &:hover {
+      background-color: darken($color-button, 10%);
+    }
+    &:focus {
+      outline: none;
+    }
   }
 
 }
