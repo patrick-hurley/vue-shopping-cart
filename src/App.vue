@@ -15,7 +15,7 @@
         <div v-if="cartItems.length != 0">
           <ul>
             <li v-for="(item, index) in cartItems" :key="index">
-              {{ item.name }} - £{{ (item.price).toFixed(2) }}
+              {{ item.name }} - £{{ (item.price).toFixed(2) }} - {{ item.quantity }}
               </li>
           </ul>
           <p class="shopping-cart_total">Total: £{{ cartTotal }}</p>
@@ -61,8 +61,12 @@ export default {
     Clothes
   },
   methods: {
-    addToCart: function(name){
-      this.cartItems.push(name);
+    addToCart: function(item){
+      this.cartItems.push(item);
+    },
+    updateCart: function(item){
+      let findIndex = this.cartItems.findIndex(x => x.name == item.name);
+      this.cartItems[findIndex].quantity++;
     },
     showBasket: function(){
       this.basketIsShown = !this.basketIsShown;
@@ -78,13 +82,20 @@ export default {
       }
     },
     cartTotal: function(){
-      return (this.cartItems.map(item => item.price).reduce((a,b) => a+b)).toFixed(2);
+      return (this.cartItems.reduce((a,b) => a+b.price, 0)).toFixed(2);
     }
   },
   created: function () {
-    console.log('This code runs when view is created')
   	this.$root.$on('addIt', (event) => {
-    	this.addToCart(event)
+      let found = this.cartItems.some((el) => {
+        return el.name === event.name
+      });
+      if(!found){
+        this.addToCart(event)
+      }
+      else {
+        this.updateCart(event)
+      }
     });
   }
 }
@@ -106,7 +117,7 @@ ul, li, p, h1, h2, h3 {
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 

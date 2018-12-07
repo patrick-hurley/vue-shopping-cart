@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     addToBasket: function(name){
-      this.$root.$emit('addIt',{'name': this.name, 'price': this.price});
+      this.$root.$emit('addIt',{'name': this.name, 'price': this.price, 'quantity':1});
     }
   },
   computed: {
