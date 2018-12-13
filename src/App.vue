@@ -14,9 +14,15 @@
       <div class="shopping-cart" v-show="basketIsShown">
         <div v-if="cartItems.length != 0">
           <ul>
-            <li v-for="(item, index) in cartItems" :key="index">
-              {{ item.name }} - £{{ (item.price).toFixed(2) }} - {{ item.quantity }}
-              </li>
+            <li class="product" v-for="(item, index) in cartItems" :key="index">
+              <ul>
+                <li>{{ item.name }} - £{{ (item.price).toFixed(2) }} x {{ item.quantity }}</li>  
+                <li>
+                  <button @click="increaseQuantity(index)">+</button>
+                  <button @click="decreaseQuantity(index)">-</button>
+                </li>
+              </ul>
+            </li>
           </ul>
           <p class="shopping-cart_total">Total: £{{ cartTotal }}</p>
         </div>
@@ -38,12 +44,11 @@
 
 /* TO DO
 // ==============================================
-// 1. Add images to products
-// 2. Show total basket amount (pass the price)
-// 3. Group the same products together in the basket
-// 
 //
-//
+// 1. Add ability to remove and add from item quantity (+ and -)
+// 2. Add a new department component
+// 3. Add a department navigation menu
+// 4. Route the department view
 //
 */
 
@@ -70,6 +75,18 @@ export default {
     },
     showBasket: function(){
       this.basketIsShown = !this.basketIsShown;
+    },
+    increaseQuantity: function(index){
+      this.cartItems[index].quantity++;
+    },
+    decreaseQuantity: function(index){
+      if(this.cartItems[index].quantity == 1)
+      {
+        this.cartItems.splice(index,1); 
+      }
+      else {
+        this.cartItems[index].quantity--;
+      }
     }
   },
   computed: {
@@ -78,11 +95,11 @@ export default {
         return 'empty'
       }
       else {
-        return this.cartItems.length
+        return this.cartItems.reduce((a,b) => a+b.quantity, 0);
       }
     },
     cartTotal: function(){
-      return (this.cartItems.reduce((a,b) => a+b.price, 0)).toFixed(2);
+      return (this.cartItems.reduce((a,b) => a+(b.price * b.quantity), 0)).toFixed(2);
     }
   },
   created: function () {
@@ -174,10 +191,25 @@ nav {
   }
 }
 
+.product {
+  button {
+    background: white;
+    border: 1px solid white;
+    margin: 0 10px 10px 0;
+    cursor: pointer;
+    &:hover {
+      background: #f3f3f3;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 
