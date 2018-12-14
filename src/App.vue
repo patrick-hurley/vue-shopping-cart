@@ -3,7 +3,7 @@
     
     <nav class="inner">
       <div class="logo">
-        <span>Hunky Dory</span>
+        <h1>Hunky Dory</h1>
       </div>
       <div class="shopping-status">
         <a @click="showBasket">Basket: ({{ cartItemCount }})</a>
@@ -32,6 +32,14 @@
       </div>
     </transition>
     
+    <aside>
+      <h2>Department</h2>
+      <ul>
+        <li><a href="#">Clothes</a></li>
+        <li><a href="#">Food</a></li>
+      </ul>
+    </aside>
+
     <main>
       <Clothes/>
     </main>
@@ -45,7 +53,6 @@
 /* TO DO
 // ==============================================
 //
-// 1. Add ability to remove and add from item quantity (+ and -)
 // 2. Add a new department component
 // 3. Add a department navigation menu
 // 4. Route the department view
@@ -123,6 +130,7 @@ export default {
 @import url('https://use.fontawesome.com/releases/v5.5.0/css/all.css');
 @import url('https://fonts.googleapis.com/css?family=Bungee|Open+Sans');
 
+$bg-color: #f3f3f3;
 
 html {
   font-family: 'Open Sans', sans-serif;
@@ -131,6 +139,10 @@ html {
 ul, li, p, h1, h2, h3 {
   margin: 0;
   padding: 0;
+}
+
+ul {
+  list-style: none;
 }
 
 .container {
@@ -151,7 +163,7 @@ nav {
 
 .logo {
   font-family: 'Bungee';
-  font-size: 50px;
+  font-size: 30px;
   float: left;
 }
 
@@ -171,15 +183,12 @@ nav {
 }
 
 .shopping-cart {
-  background: #c0bfbf;
+  background: #c5c5c5;
   border-radius: 10px;
   margin-top: 20px;
   color: white;
   padding: 20px 30px;
   font-weight: 900;
-  ul {
-    list-style: none;
-  }
   li {
     font-size: 20px;
   }
@@ -191,6 +200,41 @@ nav {
   }
 }
 
+aside {
+  width: 27%;
+  float: left;
+  margin-top: 20px;
+  padding: 20px 30px 30px;
+  border: 3px solid #eeeeee;
+  border-radius: 10px;
+  h2 {
+    text-transform: uppercase;
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+  ul  {
+    margin-top: 15px;
+  }
+  li {
+    margin-top: 10px;
+  }
+  a {
+    color: #45dd9e;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-size: 16px;
+    text-transform: uppercase;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+main {
+  width: 65%;
+  float: right;
+}
+
 .product {
   button {
     background: white;
@@ -198,7 +242,7 @@ nav {
     margin: 0 10px 10px 0;
     cursor: pointer;
     &:hover {
-      background: #f3f3f3;
+      background: $bg-color;
     }
     &:focus {
       outline: none;
