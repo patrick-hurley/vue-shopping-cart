@@ -53,9 +53,9 @@
 /* TO DO
 // ==============================================
 //
-// 2. Add a new department component
-// 3. Add a department navigation menu
-// 4. Route the department view
+// 1. Route the department view
+// 2. Decide how the data could be better structure
+// 3. Experiment with Vuex
 //
 */
 
