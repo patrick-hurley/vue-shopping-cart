@@ -13,17 +13,18 @@
     <transition name="fade">
       <div class="shopping-cart" v-show="basketIsShown">
         <div v-if="cartItems.length != 0">
-          <ul>
-            <li class="product" v-for="(item, index) in cartItems" :key="index">
-              <ul>
-                <li>{{ item.name }} - {{ (item.price).toFixed(2) | currency }} x {{ item.quantity }}</li>  
-                <li>
-                  <button @click="increaseQuantity(index)">+</button>
-                  <button @click="decreaseQuantity(index)">-</button>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <div class="table">
+            <div class="cart-product" v-for="(item, index) in cartItems" :key="index">
+                <div>{{ item.name | capitalise }}</div>
+                <div>{{ (item.price).toFixed(2) | currency }}</div> 
+                <div>
+                  <button @click="changeQuantity(index,false)">-</button>
+                  <input type="text" :value="item.quantity" disabled>
+                  <button @click="changeQuantity(index,true)">+</button>   
+                </div>
+                <div><i @click="removeAll(index)" class="fas fa-trash-alt"/></div>
+            </div>
+          </div>
           <p class="shopping-cart_total">Total: {{ cartTotal | currency }}</p>
         </div>
         <div v-else>
@@ -54,10 +55,8 @@
 /* TO DO
 // ==============================================
 //
-// 1. Add delete product confirmation
-// 2. Decide how the data could be better structured
-// 3. Experiment with Vuex
-//
+// 1. Use Vuex to pass the product quantity to Product.vue
+// 2. Add Axios to call the cart items from JSON
 */
 
 
@@ -73,6 +72,9 @@ export default {
   filters: {
     currency: (price) => {
       return '£' + price
+    },
+    capitalise: (val) => {
+      return val.toUpperCase();
     }
   },
   methods: {
@@ -86,17 +88,22 @@ export default {
     showBasket: function(){
       this.basketIsShown = !this.basketIsShown;
     },
-    increaseQuantity: function(index){
-      this.cartItems[index].quantity++;
-    },
-    decreaseQuantity: function(index){
-      if(this.cartItems[index].quantity == 1)
-      {
-        this.cartItems.splice(index,1); 
+    changeQuantity: function(index,increase){
+      if(increase){
+        this.cartItems[index].quantity++;
       }
       else {
-        this.cartItems[index].quantity--;
+        if(this.cartItems[index].quantity == 1)
+        {
+          this.cartItems.splice(index,1); 
+        }
+        else {
+          this.cartItems[index].quantity--;
+        }
       }
+    },
+    removeAll: function(index){
+      this.cartItems.splice(index,1);
     }
   },
   computed: {
@@ -148,6 +155,10 @@ ul {
   list-style: none;
 }
 
+.table {
+  display: table;
+}
+
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -186,7 +197,7 @@ nav {
 }
 
 .shopping-cart {
-  background: #c5c5c5;
+  background: #bebebe;
   border-radius: 10px;
   margin-top: 20px;
   color: white;
@@ -200,6 +211,38 @@ nav {
     margin-top: 20px;
     padding-top: 10px;
     font-size: 25px;
+  }
+}
+
+.cart-product {
+  display: table-row;
+  div {
+    display: table-cell;
+    padding-right: 20px;
+    vertical-align: middle;
+  }
+  div:first-of-type {
+    min-width: 150px;
+  }
+  button {
+    background: transparent;
+    border: none;
+    font-size: 17px;
+    color: white;
+    padding: 5px;
+    width: 30px;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+  input {
+    width: 25px;
+    text-align: center;
+    padding: 5px;
+  }
+  i {
+    cursor: pointer;
   }
 }
 
@@ -236,21 +279,6 @@ aside {
 main {
   width: 65%;
   float: right;
-}
-
-.product {
-  button {
-    background: white;
-    border: 1px solid white;
-    margin: 0 10px 10px 0;
-    cursor: pointer;
-    &:hover {
-      background: $bg-color;
-    }
-    &:focus {
-      outline: none;
-    }
-  }
 }
 
 .fade-enter-active, .v-leave-active {
