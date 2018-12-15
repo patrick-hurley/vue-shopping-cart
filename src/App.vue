@@ -35,15 +35,14 @@
     <aside>
       <h2>Department</h2>
       <ul>
-        <li><a href="#">Clothes</a></li>
-        <li><a href="#">Food</a></li>
+        <li><router-link to="/clothes">Clothes</router-link></li>
+        <li><router-link to="/food">Food</router-link></li>
       </ul>
     </aside>
 
     <main>
-      <Clothes/>
+      <router-view></router-view>
     </main>
-  
 
   </div>
 </template>
@@ -59,7 +58,7 @@
 //
 */
 
-import Clothes from './views/Clothes.vue'
+
 
 export default {
   name: 'app',
@@ -68,9 +67,6 @@ export default {
       cartItems: [],
       basketIsShown: false
     }
-  },
-  components: {
-    Clothes
   },
   methods: {
     addToCart: function(item){
