@@ -41,7 +41,9 @@
     </aside>
 
     <main>
-      <router-view></router-view>
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
     </main>
 
   </div>
@@ -246,11 +248,29 @@ main {
   }
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active, .v-leave-active {
+  transition: opacity 2s
 }
+
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.fade-leave, .fade-enter-to {
+  opacity: 1;
+}
+
+.router-link-active {
+  position: relative;
+  &:before {
+    position: absolute;
+    font-family: 'Font Awesome 5 Free';
+    content: '\f054';
+    font-weight: 900;
+    font-size: 12px;
+    left: -15px;
+    top: 4px;
+  }
 }
 
 </style>
