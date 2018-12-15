@@ -16,7 +16,7 @@
           <ul>
             <li class="product" v-for="(item, index) in cartItems" :key="index">
               <ul>
-                <li>{{ item.name }} - £{{ (item.price).toFixed(2) }} x {{ item.quantity }}</li>  
+                <li>{{ item.name }} - {{ (item.price).toFixed(2) | currency }} x {{ item.quantity }}</li>  
                 <li>
                   <button @click="increaseQuantity(index)">+</button>
                   <button @click="decreaseQuantity(index)">-</button>
@@ -24,7 +24,7 @@
               </ul>
             </li>
           </ul>
-          <p class="shopping-cart_total">Total: £{{ cartTotal }}</p>
+          <p class="shopping-cart_total">Total: {{ cartTotal | currency }}</p>
         </div>
         <div v-else>
           <p>Your basket is empty</p>
@@ -54,8 +54,8 @@
 /* TO DO
 // ==============================================
 //
-// 1. Route the department view
-// 2. Decide how the data could be better structure
+// 1. Add delete product confirmation
+// 2. Decide how the data could be better structured
 // 3. Experiment with Vuex
 //
 */
@@ -68,6 +68,11 @@ export default {
     return {
       cartItems: [],
       basketIsShown: false
+    }
+  },
+  filters: {
+    currency: (price) => {
+      return '£' + price
     }
   },
   methods: {
