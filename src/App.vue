@@ -120,7 +120,7 @@ export default {
     }
   },
   created: function () {
-  	this.$root.$on('addIt', (event) => {
+    this.$root.$on('addIt', (event) => {
       let found = this.cartItems.some((el) => {
         return el.name === event.name
       });
