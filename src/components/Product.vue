@@ -3,7 +3,7 @@
     <img :src="require(`../assets/img/${img}.png`)" alt=""/>
     <h3>{{ name }}</h3>
     <p>{{ formatPrice }}</p>
-    <button @click="addToBasket(name)">Add to Cart</button>
+    <a class="btn" @click="addToBasket(name)">Add to Cart</a>
   </div>
 </template>
 
@@ -47,19 +47,8 @@ $color-button: #d4d4d4;
     float: left;
     margin-right: 40px;
   }
-  button {
-    margin-top: 20px;
-    background-color: $color-button;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 900;
-    &:hover {
-      background-color: darken($color-button, 10%);
-    }
-    &:focus {
-      outline: none;
-    }
+  .btn {
+    margin-top: 15px;
   }
 
 }

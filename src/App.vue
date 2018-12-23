@@ -137,7 +137,8 @@ export default {
 
 <style lang="scss">
 
-@import url('https://use.fontawesome.com/releases/v5.5.0/css/all.css');
+@import 'assets/scss/materialize/materialize';
+@import url('https://use.fontawesome.com/releases/v5.6.3/css/all.css');
 @import url('https://fonts.googleapis.com/css?family=Bungee|Open+Sans');
 
 $bg-color: #f3f3f3;
@@ -183,10 +184,10 @@ nav {
 
 .shopping-status {
   float: right;
-  margin-top: 17px;
+  margin-top: 25px;
   a {
-    margin: 0;
     cursor: pointer;
+    color: black;
   }
   a:before{
     font-family: 'Font Awesome 5 Free';
