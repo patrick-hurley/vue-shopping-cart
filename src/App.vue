@@ -16,7 +16,7 @@
           <div class="table">
             <div class="cart-product" v-for="(item, index) in cartItems" :key="index">
                 <div>{{ item.name | capitalise }}</div>
-                <div>{{ (item.price).toFixed(2) | currency }}</div> 
+                <div>{{ itemTotal(index) | currency }}</div> 
                 <div>
                   <button @click="changeQuantity(index,false)">-</button>
                   <input type="text" :value="item.quantity" disabled>
@@ -71,7 +71,7 @@ export default {
   },
   filters: {
     currency: (price) => {
-      return '£' + price
+      return '£' + parseFloat(price).toFixed(2);
     },
     capitalise: (val) => {
       return val.toUpperCase();
@@ -101,6 +101,9 @@ export default {
           this.cartItems[index].quantity--;
         }
       }
+    },
+    itemTotal: function(index){
+      return (this.cartItems[index].price * this.cartItems[index].quantity);
     },
     removeAll: function(index){
       this.cartItems.splice(index,1);
@@ -238,7 +241,7 @@ nav {
     }
   }
   input {
-    width: 25px;
+    width: 40px;
     text-align: center;
     padding: 5px;
   }
