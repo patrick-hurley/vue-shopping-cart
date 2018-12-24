@@ -43,7 +43,7 @@
 
     <main>
       <transition name="fade">
-        <router-view></router-view>
+        <router-view :cartItems="cartItems"></router-view>
       </transition>
     </main>
 

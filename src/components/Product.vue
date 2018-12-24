@@ -3,6 +3,7 @@
     <img :src="require(`../assets/img/${img}.png`)" alt=""/>
     <h3>{{ name }}</h3>
     <p>{{ formatPrice }}</p>
+    <p v-show="itemTotal() > 0">{{ itemTotal() + ' in basket' }}</p>
     <a class="btn" @click="addToBasket(name)">Add to Cart</a>
   </div>
 </template>
@@ -11,16 +12,25 @@
 export default {
   name: 'Product',
   data(){
-    return { }
+    return { 
+      itemIndex: ''
+    }
   },
   props: {
     name: String,
     img: String,
-    price: Number
+    price: Number,
+    cartItems: Array
   },
   methods: {
     addToBasket: function(){
       this.$root.$emit('addIt',{'name': this.name, 'price': this.price, 'quantity':1});
+    },
+    itemTotal: function(){
+      this.itemIndex = this.cartItems.findIndex(x => x.name == this.name)
+      if(this.itemIndex >= 0){
+        return this.cartItems[this.itemIndex].quantity
+      }
     }
   },
   computed: {

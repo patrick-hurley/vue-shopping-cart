@@ -10,12 +10,14 @@ export default new Router({
     {
       path: '/clothes',
       name: 'clothes',
-      component: Clothes
+      component: Clothes,
+      props: true
     },
     {
       path: '/food',
       name: 'food',
-      component: Food
+      component: Food,
+      props: true
     }
   ]
 })

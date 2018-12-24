@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Product v-for="(product, index) in products" :key="index" v-bind="product"/>
+        <Product v-for="(product, index) in products" :key="index" v-bind="product" :cartItems="cartItems"/>
     </div>
 </template>
 
@@ -32,6 +32,9 @@
                     price: 60
                 }]
             }
+        },
+        props: {
+            cartItems: Array
         },
         components: {
             Product
