@@ -3,39 +3,56 @@
     <img :src="require(`../assets/img/${img}.png`)" alt=""/>
     <h3>{{ name }}</h3>
     <p>{{ formatPrice }}</p>
-    <p v-show="itemTotal() > 0">{{ itemTotal() + ' in basket' }}</p>
+    <p v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in basket' }}</p>
     <a class="btn" @click="addToBasket(name)">Add to Cart</a>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations } from 'vuex'
+
 export default {
   name: 'Product',
   data(){
     return { 
-      itemIndex: ''
+
     }
   },
   props: {
     name: String,
     img: String,
-    price: Number,
-    cartItems: Array
+    price: Number
   },
   methods: {
+    ...mapMutations([
+      'ADD_TO_CART',
+      'UPDATE_CART'
+    ]),
     addToBasket: function(){
-      this.$root.$emit('addIt',{'name': this.name, 'price': this.price, 'quantity':1});
-    },
-    itemTotal: function(){
-      this.itemIndex = this.cartItems.findIndex(x => x.name == this.name)
-      if(this.itemIndex >= 0){
-        return this.cartItems[this.itemIndex].quantity
+      let item = {'name': this.name, 'price': this.price, 'quantity':1};
+      let found = this.cartItems.some((el) => {
+        return el.name === this.name
+      });
+      if(!found){
+        this.ADD_TO_CART(item)
+      }
+      else {
+        this.UPDATE_CART(item)
       }
     }
   },
   computed: {
+    ...mapState([
+      'cartItems'
+    ]),
+    ...mapGetters([
+      'itemCount'
+    ]),
     formatPrice(){
       return '£' + (this.price).toFixed(2);
+    },
+    itemIndex(){
+      return this.cartItems.findIndex(x => x.name == this.name)
     }
   }
 }

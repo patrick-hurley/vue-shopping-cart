@@ -6,7 +6,7 @@
         <h1>Hunky Dory</h1>
       </div>
       <div class="shopping-status">
-        <a @click="showBasket">Basket: ({{ cartItemCount }})</a>
+        <a @click="showBasket">Basket: ({{ cartCount }})</a>
       </div>
     </nav>
 
@@ -43,7 +43,7 @@
 
     <main>
       <transition name="fade">
-        <router-view :cartItems="cartItems"></router-view>
+        <router-view></router-view>
       </transition>
     </main>
 
@@ -55,17 +55,16 @@
 /* TO DO
 // ==============================================
 //
-// 1. Use Vuex to pass the product quantity to Product.vue
+// 1. Use Vuex to store cart data
 // 2. Add Axios to call the cart items from JSON
 */
 
-
+import { mapState, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'app',
   data(){
     return {
-      cartItems: [],
       basketIsShown: false
     }
   },
@@ -78,62 +77,29 @@ export default {
     }
   },
   methods: {
-    addToCart: function(item){
-      this.cartItems.push(item);
-    },
-    updateCart: function(item){
-      let findIndex = this.cartItems.findIndex(x => x.name == item.name);
-      this.cartItems[findIndex].quantity++;
-    },
+    ...mapMutations([
+      'CHANGE_QUANTITY',
+      'REMOVE_ALL'
+    ]),
     showBasket: function(){
       this.basketIsShown = !this.basketIsShown;
     },
     changeQuantity: function(index,increase){
-      if(increase){
-        this.cartItems[index].quantity++;
-      }
-      else {
-        if(this.cartItems[index].quantity == 1)
-        {
-          this.cartItems.splice(index,1); 
-        }
-        else {
-          this.cartItems[index].quantity--;
-        }
-      }
-    },
-    itemTotal: function(index){
-      return (this.cartItems[index].price * this.cartItems[index].quantity);
+      this.CHANGE_QUANTITY({index,increase})
     },
     removeAll: function(index){
-      this.cartItems.splice(index,1);
+      this.REMOVE_ALL(index)
     }
   },
   computed: {
-    cartItemCount: function(){
-      if(this.cartItems.length === 0){
-        return 'empty'
-      }
-      else {
-        return this.cartItems.reduce((a,b) => a+b.quantity, 0);
-      }
-    },
-    cartTotal: function(){
-      return (this.cartItems.reduce((a,b) => a+(b.price * b.quantity), 0)).toFixed(2);
-    }
-  },
-  created: function () {
-    this.$root.$on('addIt', (event) => {
-      let found = this.cartItems.some((el) => {
-        return el.name === event.name
-      });
-      if(!found){
-        this.addToCart(event)
-      }
-      else {
-        this.updateCart(event)
-      }
-    });
+    ...mapState([
+      'cartItems'
+    ]),
+    ...mapGetters([
+      'cartCount',
+      'cartTotal',
+      'itemTotal'
+    ])
   }
 }
 </script>
