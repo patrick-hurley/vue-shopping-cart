@@ -29,7 +29,7 @@ export default {
       'UPDATE_CART'
     ]),
     addToBasket: function(){
-      let item = {'name': this.name, 'price': this.price, 'quantity':1};
+      let item = {'name': this.name, 'price': this.price, 'quantity': 1};
       let found = this.cartItems.some((el) => {
         return el.name === this.name
       });

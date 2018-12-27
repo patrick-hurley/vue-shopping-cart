@@ -19,7 +19,7 @@
                 {
                     name: "Jeans",
                     img: "jeans",
-                    price: 40
+                    price: 100
                 },
                 {
                     name: "Shoes",

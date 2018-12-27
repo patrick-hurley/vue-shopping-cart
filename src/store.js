@@ -9,6 +9,7 @@ export default new Vuex.Store({
   },
   mutations: {
     ADD_TO_CART: (state, item) => {
+      item.isDeleting = false;
       state.cartItems.push(item);
     },
     UPDATE_CART: (state, item) => {
@@ -30,10 +31,19 @@ export default new Vuex.Store({
       }
     },
     REMOVE_ALL: (state,index) => {
+      state.cartItems[index].isDeleting = false;
       state.cartItems.splice(index,1);
     }
   },
   actions: {
+    removeAll: ({commit}, index) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          commit('REMOVE_ALL',index)
+          resolve()
+        }, 700)
+      })
+    }
 
   },
   getters: {

@@ -22,7 +22,7 @@
                   <input type="text" :value="item.quantity" disabled>
                   <button @click="changeQuantity(index,true)">+</button>   
                 </div>
-                <div><i @click="removeAll(index)" class="fas fa-trash-alt"/></div>
+                <div><i @click="removeAllItems(item, index)" :class="item.isDeleting ? 'fas fa-spinner fa-spin' : 'fas fa-trash-alt'"/></div>
             </div>
           </div>
           <p class="shopping-cart_total">Total: {{ cartTotal | currency }}</p>
@@ -55,11 +55,10 @@
 /* TO DO
 // ==============================================
 //
-// 1. Use Vuex to store cart data
-// 2. Add Axios to call the cart items from JSON
+// 1. Add Axios to call the cart items from JSON
 */
 
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'app',
@@ -79,7 +78,9 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_QUANTITY',
-      'REMOVE_ALL'
+    ]),
+    ...mapActions([
+      'removeAll'
     ]),
     showBasket: function(){
       this.basketIsShown = !this.basketIsShown;
@@ -87,8 +88,9 @@ export default {
     changeQuantity: function(index,increase){
       this.CHANGE_QUANTITY({index,increase})
     },
-    removeAll: function(index){
-      this.REMOVE_ALL(index)
+    removeAllItems: function(item, index){
+      this.$store.state.cartItems[index].isDeleting = true;
+      this.removeAll(index);
     }
   },
   computed: {
