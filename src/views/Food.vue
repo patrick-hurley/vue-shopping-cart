@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Product v-for="(product, index) in products" :key="index" v-bind="product"/>
+        <Product v-for="(product, index) in foodProducts" :key="index" v-bind="product"/>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
     export default {
         data(){
             return {
-                products: []
+                foodProducts: []
             }
         },
         components: {
@@ -19,8 +19,10 @@
         },
         mounted() {
             axios
-            .get('./json/food.json')
-            .then(response => (this.products = response.data.products))
+            .get('./json/products.json')
+            .then(response => {
+                this.foodProducts = response.data.products.filter(x => x.department == 'Food')
+            })
         }
     }
 

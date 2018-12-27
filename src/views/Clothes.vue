@@ -17,6 +17,11 @@
         components: {
             Product
         },
+        computed: {
+            clothesProducts(){
+                return this.products.filter(x => x.department == 'Clothes')
+            }
+        },
         mounted () {
             axios
             .get('./json/clothes.json')
