@@ -31,7 +31,6 @@ export default new Vuex.Store({
       }
     },
     REMOVE_ALL: (state,index) => {
-      state.cartItems[index].isDeleting = false;
       state.cartItems.splice(index,1);
     }
   },
