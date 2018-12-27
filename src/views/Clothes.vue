@@ -11,30 +11,16 @@
     export default {
         data(){
             return {
-                products: [{
-                    name: "T shirt",
-                    img: "tshirt",
-                    price: 22.00
-                },
-                {
-                    name: "Jeans",
-                    img: "jeans",
-                    price: 100
-                },
-                {
-                    name: "Shoes",
-                    img: "shoes",
-                    price: 75
-                },
-                {
-                    name: "Jacket",
-                    img: "jacket",
-                    price: 60
-                }]
+                products: []
             }
         },
         components: {
             Product
+        },
+        mounted () {
+            axios
+            .get('./json/clothes.json')
+            .then(response => (this.products = response.data.products))
         }
     }
 
