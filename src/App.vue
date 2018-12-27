@@ -55,7 +55,7 @@
 /* TO DO
 // ==============================================
 //
-// 1. Add Axios to call the cart items from JSON
+// 1. Add checkout func
 */
 
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'

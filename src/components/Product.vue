@@ -1,10 +1,12 @@
 <template>
   <div class="product">
     <img :src="require(`../assets/img/${img}.png`)" alt=""/>
-    <h3>{{ name }}</h3>
-    <p>{{ formatPrice }}</p>
-    <p v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in basket' }}</p>
-    <a class="btn" @click="addToBasket(name)">Add to Cart</a>
+    <div class="product-info">
+      <h3>{{ name }}</h3>
+      <p>{{ formatPrice }}</p>
+      <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in basket' }}</blockquote>
+      <a class="btn" @click="addToBasket(name)">Add to Cart</a>
+    </div>
   </div>
 </template>
 
@@ -74,8 +76,20 @@ $color-button: #d4d4d4;
     float: left;
     margin-right: 40px;
   }
+  .product-info {
+    float: left;
+  }
+  blockquote {
+    margin-bottom: 10px;
+  }
   .btn {
     margin-top: 15px;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -o-user-select: none;
+    -moz-user-select: none;
   }
 
 }

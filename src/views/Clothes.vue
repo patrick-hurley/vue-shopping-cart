@@ -1,6 +1,12 @@
 <template>
     <div>
-        <Product v-for="(product, index) in products" :key="index" v-bind="product"/>
+        <section v-if="errored">
+            <p>Hmmmm. Something went wrong</p>
+        </section>
+        <section v-else>
+            <p v-show="loading">Loading... <i class="fas fa-spinner fa-spin"></i></p>
+            <Product v-for="(product, index) in clothesProducts" :key="index" v-bind="product"/>
+        </section>
     </div>
 </template>
 
@@ -11,7 +17,9 @@
     export default {
         data(){
             return {
-                products: []
+                products: [],
+                errored: false,
+                loading: true
             }
         },
         components: {
@@ -24,13 +32,23 @@
         },
         mounted () {
             axios
-            .get('./json/clothes.json')
+            .get('./json/products.json')
             .then(response => (this.products = response.data.products))
+            .catch(error => {
+                console.log(error)
+                this.errored = true
+            })
+            .finally(() => this.loading = false)
         }
     }
 
 </script>
 
 <style scoped>
+
+p  {
+    margin-top: 30px;
+    font-size: 20px;
+}  
 
 </style>
