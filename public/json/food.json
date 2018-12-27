@@ -1,0 +1,22 @@
+{
+    "products": [{
+        "name": "Carrots",
+        "img": "carrots",
+        "price": 0.10
+    },
+    {
+        "name": "Baked beans",
+        "img": "baked-beans",
+        "price": 1.35
+    },
+    {
+        "name": "Spaghetti",
+        "img": "spaghetti",
+        "price": 1.50
+    },
+    {
+        "name": "Eggs",
+        "img": "eggs",
+        "price": 1.30
+    }]
+}
