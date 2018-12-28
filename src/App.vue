@@ -33,8 +33,7 @@
       </div>
     </transition>
     
-    <section class="table">
-      
+    <section class="table full">
       <aside>
         <div class="menu">
           <h2>Department</h2>
@@ -161,6 +160,9 @@ a {
 
 .table {
   display: table;
+}
+
+.full {
   width: 100%;
 }
 
