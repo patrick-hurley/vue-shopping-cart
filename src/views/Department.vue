@@ -13,32 +13,21 @@
 <script>
 
     import Product from '../components/Product.vue'
+    import { mapState } from 'vuex'
 
     export default {
-        data(){
-            return {
-                products: [],
-                loading: true,
-                errored: false
-            }
-        },
         components: {
             Product
         },
         computed: {
+            ...mapState([
+                'products',
+                'loading',
+                'errored'
+            ]),
             filteredProducts(){
                 return this.products.filter(x => x.department.toLowerCase() == this.$route.params.department)
             }
-        },
-        mounted () {
-            axios
-            .get('./json/products.json')
-            .then(response => (this.products = response.data.products))
-            .catch(error => {
-                console.log(error)
-                this.errored = true
-            })
-            .finally(() => this.loading = false)
         }
     }
 

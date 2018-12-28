@@ -70,10 +70,7 @@ export default {
   name: 'app',
   data(){
     return {
-      products: [],
-      basketIsShown: false,
-      loading: true,
-      errored: false
+      basketIsShown: false
     }
   },
   filters: {
@@ -86,10 +83,11 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_QUANTITY',
+      'CHANGE_QUANTITY'
     ]),
     ...mapActions([
-      'removeAll'
+      'removeAll',
+      'retrieveProducts'
     ]),
     showBasket: function(){
       this.basketIsShown = !this.basketIsShown;
@@ -107,7 +105,10 @@ export default {
   },
   computed: {
     ...mapState([
-      'cartItems'
+      'cartItems',
+      'products',
+      'loading',
+      'errored'
     ]),
     ...mapGetters([
       'cartCount',
@@ -119,15 +120,8 @@ export default {
       return [...new Set(allDepartments)]
     }
   },
-  mounted () {
-      axios
-      .get('./json/products.json')
-      .then(response => (this.products = response.data.products))
-      .catch(error => {
-          console.log(error)
-          this.errored = true
-      })
-      .finally(() => this.loading = false)
+  mounted() {
+    this.retrieveProducts()
   }
 }
 </script>
@@ -201,10 +195,11 @@ nav {
 
 .shopping-status {
   float: right;
-  margin-top: 25px;
+  margin-top: 20px;
   a {
     cursor: pointer;
     color: black;
+    font-size: 18px;
   }
   a:before{
     font-family: 'Font Awesome 5 Free';

@@ -5,7 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    cartItems: []
+    cartItems: [],
+    products: [],
+    loading: true,
+    errored: false
   },
   mutations: {
     ADD_TO_CART: (state, item) => {
@@ -32,6 +35,14 @@ export default new Vuex.Store({
     },
     REMOVE_ALL: (state,index) => {
       state.cartItems.splice(index,1);
+    },
+    LOAD_PRODUCTS: (state, products) => {
+      state.products = products
+      state.loading = false
+    },
+    ERRORED: (state,error) => {
+      state.errored = true;
+      console.error(error);
     }
   },
   actions: {
@@ -42,8 +53,18 @@ export default new Vuex.Store({
           resolve()
         }, 700)
       })
+    },
+    retrieveProducts: ({commit}) => {
+      // eslint-disable-next-line no-undef
+      axios
+      .get('./json/poducts.json')
+      .then(response => {
+        commit('LOAD_PRODUCTS', response.data.products)
+      })
+      .catch(error => {
+          commit('ERRORED', error)
+      })
     }
-
   },
   getters: {
     cartCount: state => {
