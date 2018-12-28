@@ -42,9 +42,21 @@
         "department": "Food"
     },
     {
-        "name": "Eggs",
-        "img": "eggs",
-        "price": 1.30,
-        "department": "Food"
-        }]
-}
+        "name": "Honda CB400",
+        "img": "hondacb400",
+        "price": 3000,
+        "department": "Motorbikes"
+    },
+    {
+        "name": "Royal Enfield",
+        "img": "royalenfield",
+        "price": 5700,
+        "department": "Motorbikes"
+    },
+    {
+        "name": "Macbook Pro",
+        "img": "macbookpro",
+        "price": 2200,
+        "department": "Technology"
+    }
+]}

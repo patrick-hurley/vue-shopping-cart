@@ -3,7 +3,7 @@
     
     <nav class="inner">
       <div class="logo">
-        <h1>Hunky Dory</h1>
+        <h1><a href="./">Hunky Dory</a></h1>
       </div>
       <div class="shopping-status">
         <a @click="showBasket">Basket: ({{ cartCount }})</a>
@@ -58,12 +58,6 @@
 </template>
 
 <script>
-
-/* TO DO
-// ==============================================
-//
-// 1. Add checkout func
-*/
 
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -175,6 +169,9 @@ nav {
   font-family: 'Bungee';
   font-size: 30px;
   float: left;
+  a {
+    color: black;
+  }
 }
 
 .shopping-status {
