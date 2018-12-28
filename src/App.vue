@@ -3,7 +3,7 @@
     
     <nav class="inner">
       <div class="logo">
-        <h1><a href="./">Hunky Dory</a></h1>
+        <h1><router-link class="no-active" to="/">Hunky Dory</router-link></h1>
       </div>
       <div class="shopping-status">
         <a @click="showBasket">Basket: ({{ cartCount }})</a>
@@ -33,26 +33,32 @@
       </div>
     </transition>
     
-    <aside>
-      <h2>Department</h2>
-      <div v-if="errored">
-        <p>Something went wrong</p>
-      </div>
-      <div v-else>
-        <p v-show="loading">Loading... <i class="fas fa-spinner fa-spin"/></p>
-        <ul>
-          <li v-for="(department, index) in departments" :key="index">
-            <router-link :to="{ name: 'department', params: { department: department }}">{{ department }}</router-link>
-          </li>
-        </ul>
-      </div>
-    </aside>
+    <section class="table">
+      
+      <aside>
+        <div class="menu">
+          <h2>Department</h2>
+          <div v-if="errored">
+            <p>Something went wrong</p>
+          </div>
+          <div v-else>
+            <p v-show="loading">Loading... <i class="fas fa-spinner fa-spin"/></p>
+            <ul>
+              <li v-for="(department, index) in departments" :key="index">
+                <router-link :to="{ name: 'department', params: { department: department }}">{{ department }}</router-link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </aside>
 
-    <main>
-      <transition name="fade">
-        <router-view :key="$route.path"></router-view>
-      </transition>
-    </main>
+      <main>
+        <transition name="fade">
+          <router-view :key="$route.path"></router-view>
+        </transition>
+      </main>
+
+    </section> 
 
   </div>
 </template>
@@ -145,8 +151,17 @@ ul {
   list-style: none;
 }
 
+p {
+  font-size: 18px;
+}
+
+a {
+  color: black;
+}
+
 .table {
   display: table;
+  width: 100%;
 }
 
 .container {
@@ -239,13 +254,19 @@ nav {
   }
 }
 
-aside {
-  width: 27%;
-  float: left;
+section.table {
   margin-top: 20px;
-  padding: 20px 30px 30px;
-  border: 3px solid #eeeeee;
-  border-radius: 10px;
+}
+
+aside {
+  display: table-cell;
+  width: 300px;
+  vertical-align: top;
+  .menu {
+      border: 3px solid #eeeeee;
+      border-radius: 10px;
+      padding: 20px 30px 30px;
+  }
   h2 {
     text-transform: uppercase;
     font-size: 20px;
@@ -270,8 +291,8 @@ aside {
 }
 
 main {
-  width: 65%;
-  float: right;
+  display: table-cell;
+  padding-left: 30px;
 }
 
 .fade-enter-active, .v-leave-active {
@@ -286,7 +307,7 @@ main {
   opacity: 1;
 }
 
-.router-link-active {
+.router-link-active:not(.no-active) {
   position: relative;
   &:before {
     position: absolute;

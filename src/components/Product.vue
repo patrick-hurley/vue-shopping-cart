@@ -1,8 +1,10 @@
 <template>
   <div class="product">
-    <img :src="require(`../assets/img/${img}.png`)" alt=""/>
+    <div class="product-image">
+      <img :src="require(`../assets/img/${img}.png`)" alt=""/>
+    </div>
     <div class="product-info">
-      <h3>{{ name }}</h3>
+      <h3><router-link :to="{ name: 'product-detail', params: { product: slashedName } }">{{ name }}</router-link></h3>
       <p>{{ formatPrice }}</p>
       <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in basket' }}</blockquote>
       <a class="btn" @click="addToBasket(name)">Add to Cart</a>
@@ -55,6 +57,9 @@ export default {
     },
     itemIndex(){
       return this.cartItems.findIndex(x => x.name == this.name)
+    },
+    slashedName(){
+      return this.name.replace(/\s+/g, '-').toLowerCase();
     }
   }
 }
@@ -66,18 +71,26 @@ export default {
 $color-button: #d4d4d4;
 
 .product {
-  overflow: auto;
-  padding: 40px;
+  display: table;
+  width: 100%;
+  height: 250px;
+  margin-bottom: 30px;
   background: #f5f5f5;
   border-radius: 10px;
-  margin: 20px 0;
-  img {
-    width: 250px;
-    float: left;
-    margin-right: 40px;
+  padding: 10px;
+  .product-image {
+    display: table-cell;
+    padding: 20px;
+    width: 350px;
+    img {
+      width: 100%;
+      height: 200px;
+    }
   }
   .product-info {
-    float: left;
+    display: table-cell;
+    vertical-align: top;
+    padding: 20px 10px;
   }
   blockquote {
     margin-bottom: 10px;

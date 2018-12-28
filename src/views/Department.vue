@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content">
         <section v-if="errored">
             <p>Hmmm. Something has gone wrong.</p>
         </section>
@@ -47,7 +47,6 @@
 <style scoped>
 
 p  {
-    margin-top: 30px;
     font-size: 20px;
 }  
 

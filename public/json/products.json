@@ -1,6 +1,6 @@
 {
     "products": [{
-        "name": "T shirt",
+        "name": "T Shirt",
         "img": "tshirt",
         "price": 22.00,
         "department": "Clothes"
@@ -30,7 +30,7 @@
         "department": "Food"
     },
     {
-        "name": "Baked beans",
+        "name": "Baked Beans",
         "img": "baked-beans",
         "price": 1.35,
         "department": "Food"
@@ -42,7 +42,7 @@
         "department": "Food"
     },
     {
-        "name": "Honda CB400",
+        "name": "Honda Cb400",
         "img": "hondacb400",
         "price": 3000,
         "department": "Motorbikes"
