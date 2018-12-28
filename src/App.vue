@@ -35,15 +35,22 @@
     
     <aside>
       <h2>Department</h2>
-      <ul>
-        <li><router-link to="/clothes">Clothes</router-link></li>
-        <li><router-link to="/food">Food</router-link></li>
-      </ul>
+      <div v-if="errored">
+        <p>Something went wrong</p>
+      </div>
+      <div v-else>
+        <p v-show="loading">Loading... <i class="fas fa-spinner fa-spin"/></p>
+        <ul>
+          <li v-for="(department, index) in departments" :key="index">
+            <router-link :to="{ name: 'department', params: { department: department }}">{{ department }}</router-link>
+          </li>
+        </ul>
+      </div>
     </aside>
 
     <main>
       <transition name="fade">
-        <router-view></router-view>
+        <router-view :key="$route.path"></router-view>
       </transition>
     </main>
 
@@ -64,7 +71,10 @@ export default {
   name: 'app',
   data(){
     return {
-      basketIsShown: false
+      products: [],
+      basketIsShown: false,
+      loading: true,
+      errored: false
     }
   },
   filters: {
@@ -101,7 +111,21 @@ export default {
       'cartCount',
       'cartTotal',
       'itemTotal'
-    ])
+    ]),
+    departments(){
+      let allDepartments = this.products.map(x => x.department.toLowerCase())
+      return [...new Set(allDepartments)]
+    }
+  },
+  mounted () {
+      axios
+      .get('./json/products.json')
+      .then(response => (this.products = response.data.products))
+      .catch(error => {
+          console.log(error)
+          this.errored = true
+      })
+      .finally(() => this.loading = false)
   }
 }
 </script>
