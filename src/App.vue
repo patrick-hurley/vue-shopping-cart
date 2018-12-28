@@ -52,7 +52,7 @@
       </aside>
 
       <main>
-        <transition name="fade">
+        <transition name="fade" @after-leave="afterLeave">
           <router-view :key="$route.path"></router-view>
         </transition>
       </main>
@@ -100,6 +100,9 @@ export default {
     removeAllItems: function(item, index){
       this.$store.state.cartItems[index].isDeleting = true;
       this.removeAll(index);
+    },
+    afterLeave (el) {
+      window.scroll(0,0)
     }
   },
   computed: {
@@ -136,6 +139,11 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Bungee|Open+Sans');
 
 $bg-color: #f3f3f3;
+$accent-color: #dbfff3;
+
+[v-cloak] {
+  display: none;
+}
 
 html {
   font-family: 'Open Sans', sans-serif;
@@ -177,7 +185,7 @@ a {
 
 nav {
   overflow: auto;
-  background: #dbfff3;
+  background: $accent-color;
   border-radius: 10px;
   margin-top: 30px;
 }

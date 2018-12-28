@@ -7,7 +7,7 @@
       <h3><router-link :to="{ name: 'product-detail', params: { product: slashedName } }">{{ name }}</router-link></h3>
       <p>{{ formatPrice }}</p>
       <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in basket' }}</blockquote>
-      <a class="btn" @click="addToBasket(name)">Add to Cart</a>
+      <button class="btn" @click="addToBasket(name)">Add to Cart</button>
     </div>
   </div>
 </template>
@@ -65,7 +65,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
 $color-button: #d4d4d4;
@@ -84,13 +83,17 @@ $color-button: #d4d4d4;
     width: 350px;
     img {
       width: 100%;
-      height: 200px;
+      height: 220px;
     }
   }
   .product-info {
     display: table-cell;
     vertical-align: top;
     padding: 20px 10px;
+    a:hover {
+      text-decoration: underline;
+      text-decoration-color: #b7ebd9;
+    }
   }
   blockquote {
     margin-bottom: 10px;

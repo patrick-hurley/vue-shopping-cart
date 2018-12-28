@@ -20,7 +20,7 @@
 h2 {
     font-size: 25px;
     font-weight: 900;
-    margin: 30px 0 20px;
+    margin: 10px 0 20px;
 }
 
 </style>
