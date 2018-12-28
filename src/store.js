@@ -37,8 +37,8 @@ export default new Vuex.Store({
       state.cartItems.splice(index,1);
     },
     LOAD_PRODUCTS: (state, products) => {
-      state.products = products
-      state.loading = false
+        state.products = products
+        state.loading = false
     },
     ERRORED: (state,error) => {
       state.errored = true;
@@ -57,7 +57,7 @@ export default new Vuex.Store({
     retrieveProducts: ({commit}) => {
       // eslint-disable-next-line no-undef
       axios
-      .get('./json/poducts.json')
+      .get('./json/products.json')
       .then(response => {
         commit('LOAD_PRODUCTS', response.data.products)
       })
