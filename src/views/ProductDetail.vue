@@ -8,30 +8,29 @@
 </template>
 
 <script>
+
+    import { mapState } from 'vuex'
+
     export default {
         data(){
             return {
-                product: '',
                 lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere tortor ac sapien iaculis, vitae iaculis nunc iaculis. Mauris justo nisi, tempor venenatis felis vel, elementum venenatis mi. Morbi in dolor vehicula, sollicitudin ante non, eleifend tellus. Nunc mollis tortor quis sapien aliquet porttitor. Duis eu turpis vel sapien tristique sodales. Ut quis risus sed dui sagittis ultricies vel eu felis. Donec in cursus tortor, vitae vehicula nisl.'
             }
         },
         computed: {
+            ...mapState([
+                'products'
+            ]),
+            product(){
+                let findProduct = this.products.filter(x => x.name == this.formattedProduct)
+                return findProduct[0];
+            },
             formattedProduct(){
                 let removeSlash = this.$route.params.product.replace(/-/g, ' ')
                 return removeSlash.replace(/\w\S*/g, function(txt){
                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                 });
             }
-        },
-        created(){
-            axios
-            .get('./json/products.json')
-            .then(response => {
-                    let products = response.data.products;
-                    this.product = products.filter(x => x.name == this.formattedProduct)
-                    this.product = this.product[0]
-                }
-            )
         }
     }
 </script>
