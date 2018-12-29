@@ -7,19 +7,19 @@
       <h3><router-link :to="{ name: 'product-detail', params: { product: slashedName } }">{{ name }}</router-link></h3>
       <p>{{ formatPrice }}</p>
       <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in basket' }}</blockquote>
-      <button class="btn" @click="addToBasket(name)">Add to Cart</button>
+      <button class="btn" @click="addToCart(product)">Add to Cart</button>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Product',
   data(){
     return { 
-
+      product: {'name': this.name, 'price': this.price}
     }
   },
   props: {
@@ -29,21 +29,12 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'ADD_TO_CART',
+      'ADD_NEW_ITEM',
       'UPDATE_CART'
     ]),
-    addToBasket: function(){
-      let item = {'name': this.name, 'price': this.price, 'quantity': 1};
-      let found = this.cartItems.some((el) => {
-        return el.name === this.name
-      });
-      if(!found){
-        this.ADD_TO_CART(item)
-      }
-      else {
-        this.UPDATE_CART(item)
-      }
-    }
+    ...mapActions([
+      'addToCart'
+    ])
   },
   computed: {
     ...mapState([
@@ -96,7 +87,7 @@ $color-button: #d4d4d4;
     }
   }
   blockquote {
-    margin-bottom: 10px;
+    margin: 20px 0 10px;
   }
   .btn {
     margin-top: 15px;

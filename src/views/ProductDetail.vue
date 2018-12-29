@@ -3,13 +3,15 @@
         <h1>{{ product.name }}</h1>
         <img :src="require(`../assets/img/${product.img}.png`)" alt=""/>
         <p>{{ lorem }}</p>
-        <router-link class="btn" :to="{ name: 'department', params: { department: product.department.toLowerCase() }}"><i class="fas fa-arrow-left"/> Back to {{ product.department }}</router-link>
+        <router-link class="btn red lighten-1" :to="{ name: 'department', params: { department: product.department.toLowerCase() }}"><i class="fas fa-arrow-left"/> Back to {{ product.department }}</router-link>       
+        <button class="btn" @click="addToCart(productPayload)">Add to cart</button>
+        <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in basket' }}</blockquote>
     </div>
 </template>
 
 <script>
 
-    import { mapState } from 'vuex'
+    import { mapState, mapActions, mapGetters } from 'vuex'
 
     export default {
         data(){
@@ -17,9 +19,18 @@
                 lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere tortor ac sapien iaculis, vitae iaculis nunc iaculis. Mauris justo nisi, tempor venenatis felis vel, elementum venenatis mi. Morbi in dolor vehicula, sollicitudin ante non, eleifend tellus. Nunc mollis tortor quis sapien aliquet porttitor. Duis eu turpis vel sapien tristique sodales. Ut quis risus sed dui sagittis ultricies vel eu felis. Donec in cursus tortor, vitae vehicula nisl.'
             }
         },
+        methods: {
+            ...mapActions([
+                'addToCart'
+            ])
+        },
         computed: {
             ...mapState([
-                'products'
+                'products',
+                'cartItems'
+            ]),
+            ...mapGetters([
+                'itemCount'
             ]),
             product(){
                 let findProduct = this.products.filter(x => x.name == this.formattedProduct)
@@ -30,7 +41,13 @@
                 return removeSlash.replace(/\w\S*/g, function(txt){
                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                 });
-            }
+            },
+            productPayload(){
+                return { 'name': this.product.name, 'price': this.product.price }
+            },
+            itemIndex(){
+                return this.cartItems.findIndex(x => x.name == this.product.name)
+            },
         }
     }
 </script>
@@ -49,6 +66,13 @@
     }
     p {
         margin-bottom: 20px;
+    }
+    button {
+        margin-left: 30px;
+    }
+    blockquote {
+        display: inline-block;
+        margin-left: 30px;
     }
       
 }

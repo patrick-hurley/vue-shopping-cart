@@ -11,9 +11,10 @@ export default new Vuex.Store({
     errored: false
   },
   mutations: {
-    ADD_TO_CART: (state, item) => {
+    ADD_NEW_ITEM: (state, item) => {
       item.isDeleting = false;
-      state.cartItems.push(item);
+      item = { ...item, quantity: 1 }
+      state.cartItems = [...state.cartItems, item];
     },
     UPDATE_CART: (state, item) => {
       let findIndex = state.cartItems.findIndex(x => x.name == item.name);
@@ -64,6 +65,17 @@ export default new Vuex.Store({
       .catch(error => {
           commit('ERRORED', error)
       })
+    },
+    addToCart: ({commit, state}, product ) => {
+      let found = state.cartItems.some((el) => {
+        return el.name === product.name
+      });
+      if(!found){
+        commit('ADD_NEW_ITEM', product)
+      }
+      else {
+        commit('UPDATE_CART', product)
+      }
     }
   },
   getters: {

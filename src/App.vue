@@ -160,6 +160,10 @@ a {
   color: black;
 }
 
+blockquote {
+  margin: 0;
+}
+
 .table {
   display: table;
 }
