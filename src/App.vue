@@ -6,32 +6,9 @@
         <h1><router-link class="no-active" to="/">Hunky Dory</router-link></h1>
       </div>
       <div class="shopping-status">
-        <a @click="showBasket">Basket: ({{ cartCount }})</a>
+        <a @click="showModal = true">Cart: ({{ cartCount }})</a>
       </div>
     </nav>
-
-    <transition name="fade">
-      <div class="shopping-cart" v-show="basketIsShown">
-        <div v-if="cartItems.length != 0">
-          <div class="table">
-            <div class="cart-product" v-for="(item, index) in cartItems" :key="index">
-                <div>{{ item.name | capitalise }}</div>
-                <div>{{ itemTotal(index) | currency }}</div> 
-                <div>
-                  <button @click="changeQuantity(index,false)">-</button>
-                  <input type="text" :value="item.quantity" disabled>
-                  <button @click="changeQuantity(index,true)">+</button>   
-                </div>
-                <div><i @click="removeAllItems(item, index)" :class="item.isDeleting ? 'fas fa-spinner fa-spin' : 'fas fa-trash-alt'"/></div>
-            </div>
-          </div>
-          <p class="shopping-cart_total">Total: {{ cartTotal | currency }}</p>
-        </div>
-        <div v-else>
-          <p>Your basket is empty</p>
-        </div>
-      </div>
-    </transition>
     
     <section class="table full">
       <aside>
@@ -52,12 +29,47 @@
       </aside>
 
       <main>
-        <transition name="fade" @after-leave="afterLeave">
+        <transition name="medium-fade" @after-leave="afterLeave">
           <router-view :key="$route.path"></router-view>
         </transition>
       </main>
 
     </section> 
+
+    <!-- modal -->
+    <transition name="fast-fade">
+      <div v-show="showModal" class="modal-backdrop">
+        <div class="modal">
+          <div class="modal-cell">
+            <div class="modal-content">
+              <h2>Shopping Cart</h2>
+              <hr>
+              <div v-if="cartItems.length != 0">
+                <div class="table">
+                  <div class="cart-product" v-for="(item, index) in cartItems" :key="index">
+                      <div>{{ item.name | capitalise }}</div>
+                      <div>{{ itemTotal(index) | currency }}</div> 
+                      <div>
+                        <button @click="changeQuantity(index,false)">-</button>
+                        <input type="text" :value="item.quantity" disabled>
+                        <button @click="changeQuantity(index,true)">+</button>   
+                      </div>
+                      <div><i @click="removeAllItems(item, index)" :class="item.isDeleting ? 'fas fa-spinner fa-spin' : 'fas fa-trash-alt'"/></div>
+                  </div>
+                </div>
+                <p class="shopping-cart_total">Total: {{ cartTotal | currency }}</p>
+              </div>
+              <div v-else>
+                <p>Your shopping cart is empty</p>
+              </div>
+              <button class="btn close-modal" @click="showModal = false">Close cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+    <!--modal-->
+
 
   </div>
 </template>
@@ -70,7 +82,8 @@ export default {
   name: 'app',
   data(){
     return {
-      basketIsShown: false
+      basketIsShown: false,
+      showModal: false
     }
   },
   filters: {
@@ -134,10 +147,6 @@ export default {
 
 $bg-color: #f3f3f3;
 $accent-color: #dbfff3;
-
-[v-cloak] {
-  display: none;
-}
 
 html {
   font-family: 'Open Sans', sans-serif;
@@ -238,14 +247,19 @@ nav {
     padding-right: 20px;
     vertical-align: middle;
   }
-  div:first-of-type {
-    min-width: 150px;
+  div:nth-of-type(1) {
+    min-width: 220px;
+  }
+  div:nth-of-type(2) {
+    width: 100px;
+  }
+  div:nth-of-type(3) {
+    width: 150px;
   }
   button {
     background: transparent;
     border: none;
     font-size: 17px;
-    color: white;
     padding: 5px;
     width: 30px;
     cursor: pointer;
@@ -302,18 +316,7 @@ aside {
 main {
   display: table-cell;
   padding-left: 30px;
-}
-
-.fade-enter-active, .v-leave-active {
-  transition: opacity 2s
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-
-.fade-leave, .fade-enter-to {
-  opacity: 1;
+  height: 1em;
 }
 
 .router-link-active:not(.no-active) {
@@ -327,6 +330,73 @@ main {
     left: -15px;
     top: 4px;
   }
+}
+
+// Modal
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal {
+    display: table;
+    background: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid rgb(201, 201, 201);
+    height: 80vh;
+    width: 60vw;
+  }
+  .modal-cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .modal-content {
+    margin: 0 auto;
+    width: 500px;
+    h2 {
+      margin-bottom: 30px;
+    }
+    hr {
+      margin-bottom: 20px;
+    }
+    .close-modal {
+      margin-top: 30px;
+    }
+  }
+
+
+  // Transition
+
+.medium-fade-enter-active, .v-leave-active {
+  transition: opacity 2s
+}
+
+.medium-fade-enter, .medium-fade-leave-to {
+  opacity: 0;
+}
+
+.medium-fade-leave, .medium-fade-enter-to {
+  opacity: 1;
+}
+
+.fast-fade-enter-active, .fast-fade-leave-active {
+  transition: opacity 0.5s
+}
+
+.fast-fade-enter, .fast-fade-leave-to {
+  opacity: 0;
+}
+
+.fast-fade-leave, .fast-fade-enter-to {
+  opacity: 1;
 }
 
 </style>

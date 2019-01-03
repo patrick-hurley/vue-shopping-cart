@@ -6,7 +6,7 @@
     <div class="product-info">
       <h3><router-link :to="{ name: 'product-detail', params: { product: slashedName } }">{{ name }}</router-link></h3>
       <p>{{ formatPrice }}</p>
-      <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in basket' }}</blockquote>
+      <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in cart' }}</blockquote>
       <button class="btn" @click="addToCart(product)">Add to Cart</button>
     </div>
   </div>

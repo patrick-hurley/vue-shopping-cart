@@ -5,17 +5,13 @@
     </div>
 </template>
 
-<script>
-    export default {
-        date(){
-            return {
-
-            }
-        }
-    }
-</script>
-
 <style scoped>
+
+.content {
+    background: #f5f5f5;
+    padding: 20px 30px 50px;
+    height: 100%;
+}
 
 h2 {
     font-size: 25px;
