@@ -112,7 +112,7 @@ export default {
       this.$store.state.cartItems[index].isDeleting = true;
       this.removeAll(index);
     },
-    afterLeave (el) {
+    afterLeave () {
       window.scroll(0,0)
     }
   },
