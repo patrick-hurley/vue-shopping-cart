@@ -58,29 +58,46 @@ export default {
 
 <style scoped lang="scss">
 
+@import '../assets/scss/grid';
+
 $color-button: #d4d4d4;
 
 .product {
   display: table;
   width: 100%;
   height: 250px;
+  @media only screen and (max-width: $screen-md-max){
+    height: 180px;
+  }
   margin-bottom: 30px;
   background: #f5f5f5;
   border-radius: 10px;
   padding: 10px;
   .product-image {
-    display: table-cell;
-    padding: 20px;
-    width: 350px;
+    @media only screen and (min-width: $screen-md-min){
+      display: table-cell;
+      width: 200px;
+      padding: 20px;
+    }
+    @media only screen and (min-width: $screen-lg-min) {
+      width: 350px;
+    }
+    padding: 10px;
     img {
       width: 100%;
-      height: 220px;
     }
   }
   .product-info {
-    display: table-cell;
+    @media only screen and (min-width: $screen-md-min){
+      display: table-cell;
+    }
     vertical-align: top;
     padding: 20px 10px;
+    @media only screen and (max-width: $screen-md-max){
+      h3 {
+        font-size: 30px;
+      }
+    }
     a:hover {
       text-decoration: underline;
       text-decoration-color: #b7ebd9;

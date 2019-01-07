@@ -141,6 +141,7 @@ export default {
 
 <style lang="scss">
 
+@import 'assets/scss/grid';
 @import 'assets/scss/materialize/materialize';
 @import url('https://use.fontawesome.com/releases/v5.6.3/css/all.css');
 @import url('https://fonts.googleapis.com/css?family=Bungee|Open+Sans');
@@ -188,6 +189,9 @@ blockquote {
 
 .inner {
   padding: 20px 30px;
+    @media only screen and (max-width: $screen-sm-max){
+      padding: 20px;
+  }
 }
 
 nav {
@@ -195,20 +199,33 @@ nav {
   background: $accent-color;
   border-radius: 10px;
   margin-top: 30px;
+  @media only screen and (max-width: $screen-sm-max){
+    margin-top: 0px;
+  }
 }
 
 .logo {
   font-family: 'Bungee';
-  font-size: 30px;
-  float: left;
-  a {
+  @media only screen and (min-width: $screen-md-min){
+    float: left;
+  }
+  h1 {
     color: black;
+    font-size: 50px;
+    @media only screen and (max-width: $screen-sm-max){
+      font-size: 35px;
+    }
   }
 }
 
 .shopping-status {
-  float: right;
-  margin-top: 20px;
+  @media only screen and (min-width: $screen-md-min){
+    float: right;
+  }
+  margin-top: 14px;
+  @media only screen and (max-width: $screen-sm-max){
+    margin-top: 5px;
+  }
   a {
     cursor: pointer;
     color: black;
@@ -284,9 +301,19 @@ section.table {
 aside {
   display: table-cell;
   width: 300px;
+  @media only screen and (max-width: $screen-sm-max){
+    display: block;
+    width: 100%;
+  }
+  @media only screen and (max-width: $screen-md-max){
+    width: 30%;
+  }
   vertical-align: top;
   .menu {
       border: 3px solid #eeeeee;
+      @media only screen and (max-width: $screen-sm-max){
+        border: none;
+      }
       border-radius: 10px;
       padding: 20px 30px 30px;
   }
@@ -317,6 +344,11 @@ main {
   display: table-cell;
   padding-left: 30px;
   height: 1em;
+  @media only screen and (max-width: $screen-sm-max){
+    display: block;
+    width: 100%;
+    padding-left: 0px;
+  }
 }
 
 .router-link-active:not(.no-active) {
@@ -353,16 +385,31 @@ main {
     border: 1px solid rgb(201, 201, 201);
     height: 80vh;
     width: 60vw;
+    @media only screen and (max-width: $screen-sm-max){
+      width: 95vw;
+    }
+    @media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max){
+      width: 80vw;
+    }
   }
   .modal-cell {
     display: table-cell;
     vertical-align: middle;
+    @media only screen and (max-width: $screen-sm-max){
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   }
   .modal-content {
     margin: 0 auto;
-    width: 500px;
+    @media only screen and (min-width: $screen-md-min){
+      width: 500px;
+    }
     h2 {
       margin-bottom: 30px;
+      @media only screen and (max-width: $screen-sm-max){
+        font-size: 30px;
+      }
     }
     hr {
       margin-bottom: 20px;

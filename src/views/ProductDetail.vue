@@ -1,6 +1,6 @@
 <template>
     <div v-if="product" class="product-detail">
-        <h1>{{ product.name }}</h1>
+        <h2>{{ product.name }}</h2>
         <img :src="require(`../assets/img/${product.img}.png`)" alt=""/>
         <p>{{ lorem }}</p>
         <router-link class="btn red lighten-1" :to="{ name: 'department', params: { department: product.department.toLowerCase() }}"><i class="fas fa-arrow-left"/> Back to {{ product.department }}</router-link>       
@@ -54,9 +54,22 @@
 
 <style lang="scss" scoped>
 
+@import '../assets/scss/grid';
+
 .product-detail {
     width: 80%;
+    @media only screen and (max-width: $screen-sm-max){
+        width: 100%;
+        margin: 0 auto;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
     margin-bottom: 50px;
+    h2 {
+        @media only screen and (max-width: $screen-sm-max){
+            font-size: 35px;
+        }
+    }
     img {
         width: 100%;
         margin: 20px 0;
@@ -67,12 +80,27 @@
     p {
         margin-bottom: 20px;
     }
+    .btn {
+        @media only screen and (max-width: $screen-sm-max){
+            display: block;
+            width: 100%;
+        }
+    }
     button {
-        margin-left: 30px;
+        @media only screen and (max-width: $screen-sm-max){
+            margin-top: 20px;
+        }
+        @media only screen and (min-width: $screen-md-min){
+            margin-left: 30px;
+        }
     }
     blockquote {
         display: inline-block;
         margin-left: 30px;
+        @media only screen and (max-width: $screen-md-max){
+            display: block;
+            margin: 20px 0
+        }
     }
       
 }
