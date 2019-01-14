@@ -89,9 +89,6 @@ export default {
   filters: {
     currency: (price) => {
       return '£' + parseFloat(price).toFixed(2);
-    },
-    capitalise: (val) => {
-      return val.toUpperCase();
     }
   },
   methods: {
