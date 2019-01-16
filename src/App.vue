@@ -184,6 +184,9 @@ blockquote {
 .container {
   max-width: 1100px;
   margin: 0 auto;
+  @media only screen and (min-width: $screen-sm-min){
+    padding: 0 15px;
+  }
 }
 
 .inner {
