@@ -45,7 +45,7 @@
               <h2>Shopping Cart</h2>
               <hr>
               <div v-if="cartItems.length != 0">
-                <div class="table">
+                <div class="cart-container">
                   <div class="cart-product" v-for="(item, index) in cartItems" :key="index">
                       <div>{{ item.name | capitalise }}</div>
                       <div>{{ itemTotal(index) | currency }}</div> 
@@ -179,6 +179,8 @@ blockquote {
   width: 100%;
 }
 
+
+
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -254,21 +256,51 @@ nav {
   }
 }
 
+.cart-container {
+  @media only screen and (min-width: $screen-sm-min){
+    display: table;
+  }
+}
+
 .cart-product {
-  display: table-row;
-  div {
-    display: table-cell;
-    padding-right: 20px;
-    vertical-align: middle;
+  @media only screen and (max-width: $screen-xs-max) {
+    text-align: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    border-bottom: 1px solid #eeeeee;
+    div {
+      margin-bottom: 10px;
+    }
+    .fa-trash-alt {
+      width: 100%;
+      background: #EF5350;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      &:before {
+        content: 'Remove';
+        font-family: "Open Sans";
+        color: white;
+      }
+    }
   }
-  div:nth-of-type(1) {
-    min-width: 220px;
-  }
-  div:nth-of-type(2) {
-    width: 100px;
-  }
-  div:nth-of-type(3) {
-    width: 150px;
+  @media only screen and (min-width: $screen-sm-min){
+    display: table-row;
+    div {
+      display: table-cell;
+      padding-right: 20px;
+      vertical-align: middle;
+    }
+    div:nth-of-type(1) {
+      min-width: 220px;
+    }
+    div:nth-of-type(2) {
+      width: 100px;
+    }
+    div:nth-of-type(3) {
+      width: 150px;
+    }
   }
   button {
     background: transparent;
@@ -373,28 +405,34 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: $screen-xs-max){
+      display: block;
+      overflow: auto;
+    }
   }
 
   .modal {
-    display: table;
+    @media only screen and (min-width: $screen-sm-min){
+      display: table;
+      height: 80vh;
+    }
     background: #FFFFFF;
     border-radius: 10px;
     border: 1px solid rgb(201, 201, 201);
-    height: 80vh;
-    width: 60vw;
-    @media only screen and (max-width: $screen-sm-max){
+    @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max){
       width: 95vw;
     }
-    @media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max){
+    @media only screen and (min-width: $screen-md-min){
       width: 80vw;
     }
   }
   .modal-cell {
-    display: table-cell;
-    vertical-align: middle;
+    @media only screen and (min-width: $screen-sm-min){
+      display: table-cell;
+      vertical-align: middle;
+    }
     @media only screen and (max-width: $screen-sm-max){
-      padding-left: 20px;
-      padding-right: 20px;
+      padding: 20px;
     }
   }
   .modal-content {
@@ -404,7 +442,12 @@ main {
     }
     h2 {
       margin-bottom: 30px;
-      @media only screen and (max-width: $screen-sm-max){
+      @media only screen and (max-width: $screen-xs-max){
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 15px;
+      }
+      @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max){
         font-size: 30px;
       }
     }
@@ -413,6 +456,9 @@ main {
     }
     .close-modal {
       margin-top: 30px;
+      @media only screen and (max-width: $screen-xs-max){
+        width: 100%;
+      }
     }
   }
 
