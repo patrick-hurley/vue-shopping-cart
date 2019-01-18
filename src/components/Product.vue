@@ -14,6 +14,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import mymixin from '../mixins/mymixin.js'
 
 export default {
   name: 'Product',
@@ -22,6 +23,7 @@ export default {
       product: {'name': this.name, 'price': this.price}
     }
   },
+  mixins: [mymixin],
   props: {
     name: String,
     img: String,
@@ -52,6 +54,9 @@ export default {
     slashedName(){
       return this.name.replace(/\s+/g, '-').toLowerCase();
     }
+  },
+  created(){
+    console.log('hello from the component')
   }
 }
 </script>
