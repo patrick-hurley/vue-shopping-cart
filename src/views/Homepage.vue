@@ -1,9 +1,15 @@
-<template>
-    <div class="content">
-        <h2>Welcome to the store.</h2>
-        <p>Select a department to get started.</p>
-    </div>
-</template>
+<script>
+export default {
+    render:function(createElement){
+        return createElement(
+            'div', { class: 'content' }, [
+                createElement('h2','Welcome to the store'),
+                createElement('p', 'Select a department to get started')
+            ]
+        )
+    }
+}
+</script>
 
 <style scoped>
 
