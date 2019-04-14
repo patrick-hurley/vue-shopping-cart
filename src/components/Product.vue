@@ -1,7 +1,7 @@
 <template>
   <div class="product">
     <div class="product-image">
-      <img :src="require(`../assets/img/${img}.png`)" alt=""/>
+      <!-- <img :src="require(`../assets/img/${img}.png`)" alt=""/> -->
     </div>
     <div class="product-info">
       <h3><router-link :to="{ name: 'product-detail', params: { product: slashedName } }">{{ name }}</router-link></h3>
@@ -52,9 +52,6 @@ export default {
     slashedName(){
       return this.name.replace(/\s+/g, '-').toLowerCase();
     }
-  },
-  created(){
-    console.log('hello from the component')
   }
 }
 </script>
