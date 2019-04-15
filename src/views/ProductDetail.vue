@@ -1,11 +1,14 @@
 <template>
-    <div v-if="product" class="product-detail">
-        <h2>{{ product.name }}</h2>
-        <img :src="require(`../assets/img/${product.img}.png`)" alt=""/>
-        <p>{{ lorem }}</p>
-        <router-link class="btn red lighten-1" :to="{ name: 'department', params: { department: product.department.toLowerCase() }}"><i class="fas fa-arrow-left"/> Back to {{ product.department }}</router-link>       
-        <button class="btn" @click="addToCart(productPayload)">Add to cart</button>
-        <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in cart' }}</blockquote>
+    <div>
+        <p>test</p>
+        <div v-if="product" class="product-detail">
+            <h2>{{ product.name }}</h2>
+            <img :src="require(`../assets/img/${product.img}.png`)" alt=""/>
+            <p>{{ lorem }}</p>
+            <router-link class="btn red lighten-1" :to="{ name: 'department', params: { department: product.department.toLowerCase() }}"><i class="fas fa-arrow-left"/> Back to {{ product.department }}</router-link>       
+            <button class="btn" @click="addToCart(productPayload)">Add to cart</button>
+            <blockquote v-show="itemCount(itemIndex) > 0">{{ itemCount(itemIndex) + ' in cart' }}</blockquote>
+        </div>
     </div>
 </template>
 
@@ -26,12 +29,14 @@
         },
         computed: {
             ...mapState([
-                'products',
                 'cartItems'
             ]),
             ...mapGetters([
                 'itemCount'
             ]),
+            products(){
+                return this.$store.state.products
+            },
             product(){
                 let findProduct = this.products.filter(x => x.name == this.formattedProduct)
                 return findProduct[0];
